@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+message Message{
+
+  // 消息类型
+  enum MessageType{
+    // 认证
+    AUTHENTICATION = 0;
+    // 心跳
+    HEARTBEAT = 1;
+  }
+
+  // 认证消息
+  message Authentication {
+    // id
+    string clientId = 1;
+    // 地址
+    string clientAddress = 2;
+    // 名称
+    string clientName = 3;
+  }
+
+  // 心跳消息
+  message Heartbeat {
+    // 客户端id
+    string clientId = 1;
+  }
+
+  // 消息类型
+  MessageType messageType = 1;
+  // 消息体
+  oneof dataBody {
+    Authentication authentication = 2;
+    Heartbeat heartbeat = 3;
+  }
+}
